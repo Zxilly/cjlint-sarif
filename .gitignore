@@ -1,0 +1,5 @@
+node_modules/
+dist/
+*.sarif
+test.json
+.vscode/
