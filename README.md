@@ -4,7 +4,6 @@
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Zxilly/cjlint-sarif/test.yml?branch=master)](https://github.com/Zxilly/cjlint-sarif/actions)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/cjlint-sarif/cjlint-sarif/pulls)
-[![Node Version](https://img.shields.io/node/v/cjlint-sarif)](https://nodejs.org)
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
 
 一个将 cjlint 输出转换为 SARIF 格式的工具。
