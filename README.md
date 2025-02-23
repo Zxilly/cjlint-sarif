@@ -34,17 +34,17 @@ yarn add cjlint-sarif
 ### 命令行使用
 
 ```bash
-cjlint-sarif <input-file> -o <output-file>
+npx cjlint-sarif <input-file> -o <output-file>
 ```
 
 ### 作为模块使用
 
 ```typescript
 // ES Module
-import { convert } from 'cjlint-sarif';
+import { convert } from "cjlint-sarif";
 
 // CommonJS
-const { convert } = require('cjlint-sarif');
+const { convert } = require("cjlint-sarif");
 ```
 
 ### GitHub Actions
@@ -55,8 +55,8 @@ const { convert } = require('cjlint-sarif');
 - name: Convert CJLint to SARIF
   uses: Zxilly/cjlint-sarif@v1
   with:
-    input-file: 'path/to/cjlint-output.json'
-    output-file: 'output.sarif'
+    input-file: "path/to/cjlint-output.json"
+    output-file: "output.sarif"
 ```
 
 #### 输入参数
@@ -67,10 +67,12 @@ const { convert } = require('cjlint-sarif');
 #### 版本标签
 
 本项目使用语义化版本标签。当发布新版本时（如 `v1.2.3`），会自动更新以下标签：
+
 - `v1`：指向最新的 1.x.x 版本
 - `v1.2`：指向最新的 1.2.x 版本
 
 您可以在工作流中使用这些标签来获取不同级别的更新：
+
 - `@v1`：始终使用最新的主版本
 - `@v1.2`：使用特定的次版本系列
 - `@v1.2.3`：锁定到特定版本
@@ -87,18 +89,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
+      - uses: Zxilly/setup-cangjie@v1
+        with:
+          channel: "canary" # 当前仅有 Canary 渠道提供 cjlint
+          token: ${{ secrets.GITCODE_TOKEN }}
+
       # 运行 cjlint 并生成 JSON 输出
       - name: Run CJLint
-        run: cjlint . --json > cjlint-output.json
-        
+        run: cjlint src/ -r json -o cjlint-output.json
+
       # 转换为 SARIF 格式
       - name: Convert to SARIF
         uses: Zxilly/cjlint-sarif@v1
         with:
-          input-file: 'cjlint-output.json'
-          output-file: 'cjlint.sarif'
-          
+          input-file: "cjlint-output.json"
+          output-file: "cjlint.sarif"
+
       # 上传 SARIF 结果到 GitHub
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
@@ -131,10 +138,11 @@ pnpm dev
 
 1. Action 的构建输出（`dist/action.js`）需要被提交到版本控制中
 2. 每次修改 Action 相关代码后，请执行以下步骤：
+
    ```bash
    # 构建 Action
    pnpm build
-   
+
    # 提交更改，包括 dist/action.js
    git add dist/action.js
    git commit -m "chore: update action distribution"
