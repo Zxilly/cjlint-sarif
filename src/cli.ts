@@ -1,7 +1,7 @@
 import 'source-map-support/register';
 import { readFileSync, writeFileSync } from 'fs';
 import { program } from 'commander';
-import { convertToSarif } from './index';
+import { convert } from './index';
 import { version } from '../package.json';
 
 program
@@ -16,7 +16,7 @@ const options = program.opts();
 try {
   const inputData = JSON.parse(readFileSync(options.input, 'utf-8'));
   
-  const sarifReport = convertToSarif(inputData);
+  const sarifReport = convert(inputData);
   
   writeFileSync(options.output, JSON.stringify(sarifReport, null, 2));
   

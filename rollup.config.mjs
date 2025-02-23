@@ -1,7 +1,23 @@
-import typescript from '@rollup/plugin-typescript';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
+import { swc, defineRollupSwcOption } from 'rollup-plugin-swc3';
+
+const swcConfig = defineRollupSwcOption({
+  include: /\.[mc]?[jt]sx?$/,
+  exclude: /node_modules/,
+  tsconfig: 'tsconfig.json',
+  minify: true,
+  jsc: { minify: { sourceMap: true } },
+  sourceMaps: true
+});
+
+const commonPlugins = [
+  nodeResolve(),
+  commonjs(),
+  json(),
+  swc(swcConfig),
+];
 
 export default [
   {
@@ -12,15 +28,7 @@ export default [
       banner: '#!/usr/bin/env node',
       sourcemap: true
     },
-    plugins: [
-      nodeResolve(),
-      commonjs(),
-      json(),
-      typescript({
-        sourceMap: true,
-        inlineSources: true
-      }),
-    ]
+    plugins: commonPlugins
   },
   {
     input: 'src/index.ts',
@@ -36,14 +44,15 @@ export default [
         sourcemap: true
       }
     ],
-    plugins: [
-      nodeResolve(),
-      commonjs(),
-      json(),
-      typescript({
-        sourceMap: true,
-        inlineSources: true
-      }),
-    ]
+    plugins: commonPlugins
+  },
+  {
+    input: 'src/action.ts',
+    output: {
+      file: 'action/action.js',
+      format: 'esm',
+      sourcemap: true
+    },
+    plugins: commonPlugins
   }
 ];

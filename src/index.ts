@@ -2,7 +2,7 @@ import { CangjieResult } from './types';
 import * as path from 'path';
 import { Log, ReportingDescriptor, Result } from 'sarif';
 
-export function convertToSarif(input: CangjieResult[]): Log {
+export function convert(input: CangjieResult[]): Log {
   // 创建 SARIF Log
   const log: Log = {
     version: '2.1.0',

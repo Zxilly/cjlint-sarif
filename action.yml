@@ -1,0 +1,20 @@
+name: 'CJLint SARIF Converter'
+description: 'Convert CJLint JSON output to SARIF format'
+author: 'Zxilly'
+
+inputs:
+  input-file:
+    description: 'Path to the CJLint JSON output file'
+    required: true
+  output-file:
+    description: 'Path where the SARIF output should be written'
+    required: true
+    default: 'cjlint-output.sarif'
+
+runs:
+  using: 'node20'
+  main: 'action/action.js'
+
+branding:
+  icon: 'check-circle'
+  color: 'green' 

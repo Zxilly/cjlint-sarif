@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import { convertToSarif } from './index'
+import { convert } from './index'
 import { CangjieResult } from './types'
 import { Log, ReportingDescriptor, Result } from 'sarif'
 
 describe('convertToSarif', () => {
   it('should convert empty input to valid SARIF format', () => {
-    const result = convertToSarif([])
+    const result = convert([])
     expect(result.version).toBe('2.1.0')
     expect(result.$schema).toBe('https://json.schemastore.org/sarif-2.1.0.json')
     expect(result.runs[0].results).toHaveLength(0)
@@ -40,7 +40,7 @@ describe('convertToSarif', () => {
       }
     ]
 
-    const result = convertToSarif(input)
+    const result = convert(input)
     
     
     const rules = result.runs[0].tool.driver.rules as ReportingDescriptor[]
@@ -74,7 +74,7 @@ describe('convertToSarif', () => {
       }
     ]
 
-    const result = convertToSarif(input)
+    const result = convert(input)
     
     const rules = result.runs[0].tool.driver.rules as ReportingDescriptor[]
     expect(rules).toHaveLength(1)
@@ -103,7 +103,7 @@ describe('convertToSarif', () => {
       }
     ]
 
-    const result = convertToSarif(input)
+    const result = convert(input)
     
     const rules = result.runs[0].tool.driver.rules as ReportingDescriptor[]
     expect(rules).toHaveLength(1)
@@ -173,7 +173,7 @@ describe('convertToSarif', () => {
       }
     ]
 
-    const result = convertToSarif(input)
+    const result = convert(input)
 
     const rules = result.runs[0].tool.driver.rules as ReportingDescriptor[]
     expect(rules).toHaveLength(3)
