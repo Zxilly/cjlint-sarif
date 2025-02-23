@@ -2,10 +2,11 @@ import 'source-map-support/register';
 import { readFileSync, writeFileSync } from 'fs';
 import { program } from 'commander';
 import { convertToSarif } from './index';
+import { version } from '../package.json';
 
 program
-  .version('1.0.0')
-  .description('Convert Cangjie JSON to SARIF format')
+  .version(version)
+  .description('Convert cjlint JSON to SARIF format')
   .requiredOption('-i, --input <path>', 'Input JSON file path')
   .option('-o, --output <path>', 'Output SARIF file path', 'output.sarif')
   .parse();

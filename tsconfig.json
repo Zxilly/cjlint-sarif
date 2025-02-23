@@ -11,7 +11,9 @@
     "rootDir": "src",
     "sourceMap": true,
     "inlineSourceMap": false,
-    "inlineSources": true
+    "inlineSources": true,
+    "resolveJsonModule": true,
+    "allowJs": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

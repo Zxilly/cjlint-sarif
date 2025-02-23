@@ -8,9 +8,25 @@ importers:
 
   .:
     dependencies:
+      '@types/sarif':
+        specifier: ^2.1.7
+        version: 2.1.7
+      commander:
+        specifier: ^13.1.0
+        version: 13.1.0
+      source-map-support:
+        specifier: ^0.5.21
+        version: 0.5.21
+      tslib:
+        specifier: ^2.8.1
+        version: 2.8.1
+    devDependencies:
       '@rollup/plugin-commonjs':
         specifier: ^28.0.2
         version: 28.0.2(rollup@4.34.8)
+      '@rollup/plugin-json':
+        specifier: ^6.1.0
+        version: 6.1.0(rollup@4.34.8)
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.0
         version: 16.0.0(rollup@4.34.8)
@@ -23,31 +39,15 @@ importers:
       '@types/node':
         specifier: ^22.13.5
         version: 22.13.5
-      '@types/sarif':
-        specifier: ^2.1.7
-        version: 2.1.7
-      cjlint-sarif:
-        specifier: 'link:'
-        version: 'link:'
-      commander:
-        specifier: ^13.1.0
-        version: 13.1.0
-      rollup:
-        specifier: ^4.34.8
-        version: 4.34.8
-      source-map-support:
-        specifier: ^0.5.21
-        version: 0.5.21
-      tslib:
-        specifier: ^2.8.1
-        version: 2.8.1
-      typescript:
-        specifier: ^5.7.3
-        version: 5.7.3
-    devDependencies:
       '@vitest/coverage-v8':
         specifier: ^1.6.1
         version: 1.6.1(vitest@1.6.1(@types/node@22.13.5)(terser@5.39.0))
+      rollup:
+        specifier: ^4.34.8
+        version: 4.34.8
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
       vitest:
         specifier: ^1.6.1
         version: 1.6.1(@types/node@22.13.5)(terser@5.39.0)
@@ -250,6 +250,15 @@ packages:
     engines: {node: '>=16.0.0 || 14 >= 14.17'}
     peerDependencies:
       rollup: ^2.68.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+
+  '@rollup/plugin-json@6.1.0':
+    resolution: {integrity: sha512-EGI2te5ENk1coGeADSIwZ7G2Q8CJS2sF120T7jLw4xFw9n7wIOXHo+kIYRAoVpJAN+kmqZSoO3Fp4JtoNF4ReA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
     peerDependenciesMeta:
       rollup:
         optional: true
@@ -1020,6 +1029,12 @@ snapshots:
       is-reference: 1.2.1
       magic-string: 0.30.17
       picomatch: 4.0.2
+    optionalDependencies:
+      rollup: 4.34.8
+
+  '@rollup/plugin-json@6.1.0(rollup@4.34.8)':
+    dependencies:
+      '@rollup/pluginutils': 5.1.4(rollup@4.34.8)
     optionalDependencies:
       rollup: 4.34.8
 
