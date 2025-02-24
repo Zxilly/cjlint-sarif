@@ -2,6 +2,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import { swc, defineRollupSwcOption } from 'rollup-plugin-swc3';
+import dts from 'rollup-plugin-dts';
 
 const swcConfig = defineRollupSwcOption({
   include: /\.[mc]?[jt]sx?$/,
@@ -9,7 +10,7 @@ const swcConfig = defineRollupSwcOption({
   tsconfig: 'tsconfig.json',
   minify: true,
   jsc: { minify: { sourceMap: true } },
-  sourceMaps: true
+  sourceMaps: true,
 });
 
 const commonPlugins = [
@@ -45,6 +46,14 @@ export default [
       }
     ],
     plugins: commonPlugins
+  },
+  {
+    input: 'src/index.ts',
+    output: {
+      file: 'dist/index.d.ts',
+      format: 'esm'
+    },
+    plugins: [dts()]
   },
   {
     input: 'src/action.ts',
