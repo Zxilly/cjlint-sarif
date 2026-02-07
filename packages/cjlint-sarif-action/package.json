@@ -1,6 +1,6 @@
 {
   "name": "cjlint-sarif-action",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "private": true,
   "description": "GitHub Action for converting cjlint JSON output to SARIF format",
   "type": "module",
