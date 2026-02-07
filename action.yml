@@ -13,8 +13,8 @@ inputs:
 
 runs:
   using: 'node20'
-  main: 'action/action.js'
+  main: 'packages/cjlint-sarif-action/dist/action.js'
 
 branding:
   icon: 'check-circle'
-  color: 'green' 
+  color: 'green'

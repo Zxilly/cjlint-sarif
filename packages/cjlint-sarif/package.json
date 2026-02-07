@@ -1,0 +1,63 @@
+{
+  "name": "cjlint-sarif",
+  "version": "2.0.0",
+  "description": "Convert cjlint JSON output to SARIF format",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "type": "module",
+  "bin": {
+    "cjlint-sarif": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "cjlint",
+    "sarif",
+    "converter",
+    "static-analysis",
+    "code-quality",
+    "cangjie"
+  ],
+  "author": {
+    "name": "Zxilly",
+    "email": "zxilly@outlook.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^14.0.3",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@types/node": "^25.2.1",
+    "@types/sarif": "^2.1.7",
+    "@vitest/coverage-v8": "^4.0.18",
+    "rollup": "^4.57.1",
+    "rollup-plugin-dts": "^6.3.0",
+    "rollup-plugin-swc3": "^0.12.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

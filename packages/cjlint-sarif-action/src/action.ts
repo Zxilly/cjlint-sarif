@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import { readFileSync, writeFileSync } from 'fs';
-import { convert } from './index';
+import { convert, parseCangjieResults } from 'cjlint-sarif';
+import { z } from 'zod';
 
 async function run(): Promise<void> {
   try {
@@ -8,9 +9,17 @@ async function run(): Promise<void> {
     const outputFile = core.getInput('output-file', { required: true });
 
     core.info(`Reading CJLint output from ${inputFile}`);
-    const inputJson = JSON.parse(readFileSync(inputFile, 'utf8'));
+    const rawData = readFileSync(inputFile, 'utf8');
 
-    core.info('Converting to SARIF format');
+    let jsonData: unknown;
+    try {
+      jsonData = JSON.parse(rawData);
+    } catch {
+      throw new Error('Invalid JSON format in input file');
+    }
+
+    core.info('Validating and converting to SARIF format');
+    const inputJson = parseCangjieResults(jsonData);
     const sarifOutput = convert(inputJson);
 
     core.info(`Writing SARIF output to ${outputFile}`);
@@ -18,7 +27,10 @@ async function run(): Promise<void> {
 
     core.info('Conversion completed successfully');
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof z.ZodError) {
+      const details = error.issues.map(i => `${i.path.join('.')}: ${i.message}`).join('; ');
+      core.setFailed(`Validation error: ${details}`);
+    } else if (error instanceof Error) {
       core.setFailed(error.message);
     } else {
       core.setFailed('An unexpected error occurred');
@@ -26,4 +38,4 @@ async function run(): Promise<void> {
   }
 }
 
-run(); 
+run();

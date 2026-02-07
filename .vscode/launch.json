@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "调试 CLI",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/cli.ts",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "args": ["-i", "test.json", "-o", "output.sarif"],
+      "console": "integratedTerminal"
+    }
+  ]
+} 

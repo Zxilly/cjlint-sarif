@@ -5,7 +5,7 @@ import { swc, defineRollupSwcOption } from 'rollup-plugin-swc3';
 import dts from 'rollup-plugin-dts';
 
 const swcConfig = defineRollupSwcOption({
-  include: /\.[mc]?[jt]sx?$/,
+  include: /\.[jt]sx?$/,
   exclude: /node_modules/,
   tsconfig: 'tsconfig.json',
   minify: true,
@@ -13,12 +13,7 @@ const swcConfig = defineRollupSwcOption({
   sourceMaps: true,
 });
 
-const commonPlugins = [
-  nodeResolve(),
-  commonjs(),
-  json(),
-  swc(swcConfig),
-];
+const plugins = [nodeResolve(), commonjs(), json(), swc(swcConfig)];
 
 export default [
   {
@@ -26,42 +21,32 @@ export default [
     output: {
       file: 'dist/cli.js',
       format: 'esm',
-      banner: '#!/usr/bin/env node',
       sourcemap: true
     },
-    plugins: commonPlugins
+    plugins: [
+      nodeResolve(),
+      commonjs(),
+      json(),
+      swc(swcConfig),
+      {
+        name: 'add-shebang',
+        renderChunk(code) {
+          return '#!/usr/bin/env node\n' + code;
+        }
+      }
+    ]
   },
   {
     input: 'src/index.ts',
     output: [
-      {
-        file: 'dist/index.cjs',
-        format: 'cjs',
-        sourcemap: true
-      },
-      {
-        file: 'dist/index.mjs',
-        format: 'esm',
-        sourcemap: true
-      }
+      { file: 'dist/index.cjs', format: 'cjs', sourcemap: true },
+      { file: 'dist/index.mjs', format: 'esm', sourcemap: true }
     ],
-    plugins: commonPlugins
+    plugins
   },
   {
     input: 'src/index.ts',
-    output: {
-      file: 'dist/index.d.ts',
-      format: 'esm'
-    },
+    output: { file: 'dist/index.d.ts', format: 'esm' },
     plugins: [dts()]
-  },
-  {
-    input: 'src/action.ts',
-    output: {
-      file: 'action/action.js',
-      format: 'esm',
-      sourcemap: true
-    },
-    plugins: commonPlugins
   }
 ];

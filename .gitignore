@@ -1,6 +1,11 @@
 node_modules/
-dist/
+coverage/
 *.sarif
-test.json
-.vscode/
+
+# Ignore lib dist (published to npm)
+packages/cjlint-sarif/dist/
+
+# Keep action dist (required for GitHub Actions)
+!packages/cjlint-sarif-action/dist/
+
 .claude/

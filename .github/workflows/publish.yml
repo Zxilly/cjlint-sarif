@@ -12,39 +12,39 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
-          
+
       - uses: pnpm/action-setup@v4
-          
+
       - name: Verify version
         id: verify
         run: |
           TAG_VERSION=${GITHUB_REF#refs/tags/v}
-          PACKAGE_VERSION=$(node -p "require('./package.json').version")
-          
+          PACKAGE_VERSION=$(node -p "require('./packages/cjlint-sarif/package.json').version")
+
           if [ "$TAG_VERSION" != "$PACKAGE_VERSION" ]; then
             echo "Version mismatch: Tag version ($TAG_VERSION) does not match package.json version ($PACKAGE_VERSION)"
             exit 1
           fi
-          
+
           echo "version=$TAG_VERSION" >> $GITHUB_OUTPUT
-          
+
       - name: Install dependencies
         run: pnpm install
-        
+
+      - name: Build packages
+        run: pnpm build
+
       - name: Run tests
         run: pnpm test
-        
-      - name: Build
-        run: pnpm build
-        
-      - name: Publish to NPM
-        run: pnpm publish --no-git-checks
+
+      - name: Publish cjlint-sarif to NPM
+        run: pnpm --filter cjlint-sarif publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
