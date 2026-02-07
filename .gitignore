@@ -3,3 +3,4 @@ dist/
 *.sarif
 test.json
 .vscode/
+.claude/
